@@ -7,8 +7,8 @@ import (
 	"time"
 
 	"github.com/monitprod/db_repository"
-	"github.com/monitprod/db_repository/pkg/loaders/database"
-	"go.mongodb.org/mongo-driver/bson"
+	"github.com/monitprod/db_repository/pkg/repository"
+	u "github.com/monitprod/db_repository/pkg/util"
 )
 
 func main() {
@@ -19,7 +19,23 @@ func main() {
 
 	db_repository.StartRepository(ctx)
 
-	// Mongodb Client
+	userRepository := repository.NewUserRepositoryMongoDB()
+
+	users, err := userRepository.GetUsers(ctx,
+		repository.GetUsersOptions{
+			Page: u.PaginateOptions{
+				CurrentPage: 0,
+				PageSize:    1,
+			},
+		})
+
+	if err != nil {
+		log.Fatalln("Error while get users from repository", err)
+	}
+
+	fmt.Println(*users)
+
+	/*// Mongodb Client
 	client := database.GetClient()
 
 	productCollection := client.Database("monitprod").Collection("products")
@@ -45,6 +61,6 @@ func main() {
 	}
 	if err := cur.Err(); err != nil {
 		log.Fatal(err)
-	}
+	}*/
 
 }
