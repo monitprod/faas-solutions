@@ -7,6 +7,7 @@ import (
 	"time"
 
 	"github.com/monitprod/db_repository"
+	"github.com/monitprod/db_repository/pkg/loaders/database"
 	"go.mongodb.org/mongo-driver/bson"
 )
 
@@ -16,10 +17,10 @@ func main() {
 
 	ctx, _ := context.WithTimeout(context.Background(), 10*time.Second)
 
-	repository := db_repository.StartRepository(ctx)
+	db_repository.StartRepository(ctx)
 
 	// Mongodb Client
-	client := repository.Client
+	client := database.GetClient()
 
 	productCollection := client.Database("monitprod").Collection("products")
 

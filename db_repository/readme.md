@@ -20,7 +20,7 @@ import (
 
 ctx, _ := context.Background()
 
-StartRepository(ctx)
+db_repository.StartRepository(ctx)
 
 ```
 
@@ -31,10 +31,13 @@ StartRepository(ctx)
 import ( 
     "context"
     "github.com/monitprod/db_repository" 
+    "github.com/monitprod/db_repository/pkg/loaders/database"
 )
 
 ctx, _ := context.Background()
 
-mongoClient := StartRepository(ctx).Client
+db_repository.StartRepository(ctx)
+
+client := database.GetClient()
 
 ```

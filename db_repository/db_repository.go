@@ -5,22 +5,15 @@ import (
 	"log"
 
 	"github.com/joho/godotenv"
-	"github.com/monitprod/db_repository/pkg/loaders"
-	"go.mongodb.org/mongo-driver/mongo"
+	"github.com/monitprod/db_repository/pkg/loaders/database"
 )
 
-type Repository struct {
-	Client *mongo.Client
-}
-
-func StartRepository(ctx context.Context) Repository {
+func StartRepository(ctx context.Context) {
 	err := godotenv.Load(".env")
 
 	if err != nil {
 		log.Fatalln("Error: Dot env not initialized")
 	}
 
-	return Repository{
-		Client: loaders.MongoConnect(ctx),
-	}
+	database.ConnectClient(ctx)
 }
