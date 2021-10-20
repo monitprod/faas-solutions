@@ -8,12 +8,13 @@ import (
 	"github.com/monitprod/core/pkg/loaders/database"
 	m "github.com/monitprod/core/pkg/models"
 	"github.com/monitprod/core/pkg/util"
+	"github.com/monitprod/core/pkg/vo"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
 type GetUsersOptions struct {
-	Page util.PaginateOptions
+	Page vo.PaginateOptions
 }
 
 type UserRepository interface {

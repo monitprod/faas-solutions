@@ -7,7 +7,7 @@ import (
 	m "github.com/monitprod/core/pkg/models"
 	"github.com/monitprod/core/pkg/repository"
 	r "github.com/monitprod/core/pkg/repository"
-	"github.com/monitprod/core/pkg/util"
+	"github.com/monitprod/core/pkg/vo"
 	f "github.com/monitprod/send_email/pkg/interface/function"
 )
 
@@ -33,7 +33,7 @@ func newUserServiceImp(
 func (e *UserServiceImp) GetUsers(ctx context.Context) (*[]m.User, error) {
 
 	users, err := e.UserRepository.GetUsers(ctx, repository.GetUsersOptions{
-		Page: util.PaginateOptions{
+		Page: vo.PaginateOptions{
 			CurrentPage: e.Payload.Execution,
 			PageSize:    e.Payload.UsersPerExecution,
 		},

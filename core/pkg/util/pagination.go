@@ -1,13 +1,11 @@
 package util
 
-import "go.mongodb.org/mongo-driver/mongo/options"
+import (
+	"github.com/monitprod/core/pkg/vo"
+	"go.mongodb.org/mongo-driver/mongo/options"
+)
 
-type PaginateOptions struct {
-	CurrentPage int64
-	PageSize    int64
-}
-
-func PaginateFind(findOpts *options.FindOptions, pgOpts PaginateOptions) *options.FindOptions {
+func PaginateFind(findOpts *options.FindOptions, pgOpts vo.PaginateOptions) *options.FindOptions {
 	skipElements := pgOpts.PageSize * pgOpts.CurrentPage
 
 	findOpts.Limit = &pgOpts.PageSize

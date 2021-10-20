@@ -6,7 +6,7 @@ import (
 	"testing"
 
 	"github.com/monitprod/core"
-	u "github.com/monitprod/core/pkg/util"
+	"github.com/monitprod/core/pkg/vo"
 )
 
 func TestUsersRepository(t *testing.T) {
@@ -20,7 +20,7 @@ func TestUsersRepository(t *testing.T) {
 
 	users, err := userRepository.GetUsers(ctx,
 		GetUsersOptions{
-			Page: u.PaginateOptions{
+			Page: vo.PaginateOptions{
 				CurrentPage: 0,
 				PageSize:    1,
 			},
