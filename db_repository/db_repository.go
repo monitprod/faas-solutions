@@ -3,6 +3,7 @@ package db_repository
 import (
 	"context"
 	"log"
+	"os"
 	"path/filepath"
 	"runtime"
 
@@ -26,6 +27,7 @@ func StartRepositoryEnv(ctx context.Context, envPath string) {
 }
 
 func StartRepository(ctx context.Context) {
+	startRootPath()
 
 	err := godotenv.Load(getDefaultEnvPath())
 
@@ -37,13 +39,14 @@ func StartRepository(ctx context.Context) {
 }
 
 func getDefaultEnvPath() string {
-	return getBasepath() + "\\.env"
+	return os.Getenv("DB_REPOSITORY_ROOT_PATH") + "\\.env"
 }
 
-func getBasepath() string {
+func startRootPath() {
 	var (
 		_, b, _, _ = runtime.Caller(0)
 		basepath   = filepath.Dir(b)
 	)
-	return basepath
+
+	os.Setenv("DB_REPOSITORY_ROOT_PATH", basepath)
 }

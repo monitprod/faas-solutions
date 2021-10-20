@@ -47,10 +47,12 @@ func (u UserRepositoryMongoDB) GetUsers(ctx context.Context, opt GetUsersOptions
 
 	if err != nil {
 		log.Fatalln("Error while find user collection:", err)
+		return nil, err
 	}
 
 	if err = cursor.All(ctx, &users); err != nil {
 		log.Fatalln("Error while cursor all users of user collection:", err)
+		return nil, err
 	}
 
 	return &users, nil
