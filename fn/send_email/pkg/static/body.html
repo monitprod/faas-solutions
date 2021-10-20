@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="style.css">
+    <title>Email</title>
+
+    <style>
+        body{
+            background-color: #e1e1e1;
+            font-family: Noto Sans;
+        }
+        
+        .container{
+          max-width: 680px;
+          width: 100%;
+          margin: auto;
+        }
+        
+        main{
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            color: #555555; 
+        }
+        
+        .body h2{
+            font-weight: 700;
+            color: #464646;
+        }
+        
+        .logo{
+            width: 150px;
+            padding: 5px 5px;
+        }
+        
+        .header-img{
+            max-width: 100% !important;
+            height: auto !important;
+            width: 100%;
+        }
+        
+        a{
+            text-decoration: underline; 
+            color: #0c99d5; 
+        }
+        
+        
+        .body{
+            padding: 20px;
+            background-color: white;
+            font-family: Noto Sans;
+            font-size: 16px; 
+            line-height: 22px; 
+            color: #555555; 
+            text-align: center;
+        }
+        
+        button{
+            border: none;
+            color: white;
+            border-radius: 2px;
+            height: 50px;
+            max-width: 250px;
+            padding: 0px 30px;
+            margin: 10px 0px 30px 0px;
+
+            background: linear-gradient(0deg, #ED2E7E, #ED2E7E), linear-gradient(114.44deg, #EB0055 0%, #FFFA80 100%), #5F2EEA;
+            border-radius: 10px;
+
+
+            font-family: Noto Sans;
+            font-style: normal;
+            font-weight: bold;
+            font-size: 14px;
+            line-height: 16px;
+            /* or 114% */
+
+            text-align: center;
+            letter-spacing: 0.125px;
+        }
+        
+        footer{
+            padding-top: 50px;
+            font-family: Geneva, Tahoma, Verdana, sans-serif; 
+            font-size: 14px; 
+            line-height: 18px; 
+            color: #738597;
+            text-align: center;
+        }
+        
+        footer img{
+            width: 100px;
+            margin: 24px 0px;
+        }
+        
+    </style>
+</head>
+
+<body>
+
+    <main class="container">
+        
+        <div class="body">
+            <div style="text-align: left;">
+                <h2>Sua lista de produtos 📭</h2>
+            </div>
+
+            <table class="pure-table">
+                <thead>
+                    <tr>
+                        <th>Nome</th>
+                        <th>Especificação</th>
+                        <th>Valor</th>
+                        <th>Ultimos 7 dias %</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    [TABLE_ROWS]
+                </tbody>
+            </table>
+
+            <button>Veja mais</button>
+
+            <p>Compre no momento certo e valorize seu dinheiro!</p>
+
+        </div>
+
+    </main>
+
+    <footer class="container">
+        <p>MONITPROD</p>
+    </footer>
+
+</div>
+
+    
+</body>
+
+</html>
