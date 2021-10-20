@@ -4,10 +4,10 @@ import (
 	"context"
 	"log"
 
-	m "github.com/monitprod/db_repository/pkg/models"
-	"github.com/monitprod/db_repository/pkg/repository"
-	r "github.com/monitprod/db_repository/pkg/repository"
-	"github.com/monitprod/db_repository/pkg/util"
+	m "github.com/monitprod/core/pkg/models"
+	"github.com/monitprod/core/pkg/repository"
+	r "github.com/monitprod/core/pkg/repository"
+	"github.com/monitprod/core/pkg/util"
 	f "github.com/monitprod/send_email/pkg/interface/function"
 )
 

@@ -4,10 +4,10 @@ import (
 	"context"
 	"log"
 
-	c "github.com/monitprod/db_repository/pkg/constant"
-	"github.com/monitprod/db_repository/pkg/loaders/database"
-	m "github.com/monitprod/db_repository/pkg/models"
-	"github.com/monitprod/db_repository/pkg/util"
+	c "github.com/monitprod/core/pkg/constant"
+	"github.com/monitprod/core/pkg/loaders/database"
+	m "github.com/monitprod/core/pkg/models"
+	"github.com/monitprod/core/pkg/util"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo/options"
 )

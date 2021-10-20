@@ -1,31 +1,31 @@
-# DB Repository
+# Core
 
 ## Env Variables
 
-    DB_REPOSITORY_MONGO_URI=<MONGO_DB_URI>
-    DB_REPOSITORY_ROOT_PATH=<ROOT_PATH> # Read-only, don't modify it
+    CORE_MONGO_URI=<MONGO_DB_URI>
+    CORE_ROOT_PATH=<ROOT_PATH> # Read-only, don't modify it
 
 ## How to use?
 
 1. Install this package
 
-        go get github.com/monitprod/db_repository
+        go get github.com/monitprod/core
 
 2. Duplicate and rename file .example.env to .env
 
 3. Configure .env file
 
-4. Start db_repository
+4. Start core
 
 ``` go
 import ( 
     "context"
-    "github.com/monitprod/db_repository" 
+    "github.com/monitprod/core" 
 )
 
 ctx, _ := context.Background()
 
-db_repository.StartRepository(ctx)
+core.StartRepository(ctx)
 
 ```
 
@@ -35,13 +35,13 @@ db_repository.StartRepository(ctx)
 ``` go
 import ( 
     "context"
-    "github.com/monitprod/db_repository" 
-    "github.com/monitprod/db_repository/pkg/loaders/database"
+    "github.com/monitprod/core" 
+    "github.com/monitprod/core/pkg/loaders/database"
 )
 
 ctx, _ := context.Background()
 
-db_repository.StartRepository(ctx)
+core.StartRepository(ctx)
 
 client := database.GetClient()
 

@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"testing"
 
-	"github.com/monitprod/db_repository/pkg/mock"
+	"github.com/monitprod/core/pkg/mock"
 )
 
 func TestMountBody(t *testing.T) {

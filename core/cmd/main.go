@@ -6,18 +6,18 @@ import (
 	"log"
 	"time"
 
-	"github.com/monitprod/db_repository"
-	"github.com/monitprod/db_repository/pkg/repository"
-	u "github.com/monitprod/db_repository/pkg/util"
+	"github.com/monitprod/core"
+	"github.com/monitprod/core/pkg/repository"
+	u "github.com/monitprod/core/pkg/util"
 )
 
 func main() {
-	fmt.Println("DB Repository Started!\n" +
+	fmt.Println("Core Started!\n" +
 		"This execution is only for tests")
 
 	ctx, _ := context.WithTimeout(context.Background(), 10*time.Second)
 
-	db_repository.StartRepository(ctx)
+	core.StartRepository(ctx)
 
 	userRepository := repository.NewUserRepositoryMongoDB()
 

@@ -13,7 +13,7 @@ var client *mongo.Client
 
 func ConnectClient(ctx context.Context) *mongo.Client {
 
-	uri := os.Getenv("DB_REPOSITORY_MONGO_URI")
+	uri := os.Getenv("CORE_MONGO_URI")
 
 	clientOptions := options.Client().ApplyURI(uri)
 
@@ -51,7 +51,7 @@ func DisconnectClient(ctx context.Context) error {
 
 func isClientStarted() bool {
 	if client == nil {
-		log.Fatalln("Mongo Client not started, use db_repository.StartRepository(ctx) to start")
+		log.Fatalln("Mongo Client not started, use core.StartRepository(ctx) to start")
 		return false
 	}
 	return true

@@ -1,6 +1,6 @@
 package service
 
-import m "github.com/monitprod/db_repository/pkg/models"
+import m "github.com/monitprod/core/pkg/models"
 
 type EmailOptions struct {
 	subject string

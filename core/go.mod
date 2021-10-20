@@ -1,4 +1,4 @@
-module github.com/monitprod/db_repository
+module github.com/monitprod/core
 
 go 1.16
 

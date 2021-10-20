@@ -1,6 +1,6 @@
 package mock
 
-import "github.com/monitprod/db_repository/pkg/models"
+import "github.com/monitprod/core/pkg/models"
 
 var NintendoSwitch = models.Product{
 	Title:         "Nintendo Switch",

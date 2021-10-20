@@ -1,4 +1,4 @@
-package db_repository
+package core
 
 import (
 	"context"
@@ -8,7 +8,7 @@ import (
 	"runtime"
 
 	"github.com/joho/godotenv"
-	"github.com/monitprod/db_repository/pkg/loaders/database"
+	"github.com/monitprod/core/pkg/loaders/database"
 )
 
 func StartRepositoryEnv(ctx context.Context, envPath string) {
@@ -39,7 +39,7 @@ func StartRepository(ctx context.Context) {
 }
 
 func getDefaultEnvPath() string {
-	return os.Getenv("DB_REPOSITORY_ROOT_PATH") + "\\.env"
+	return os.Getenv("CORE_ROOT_PATH") + "\\.env"
 }
 
 func startRootPath() {
@@ -48,5 +48,5 @@ func startRootPath() {
 		basepath   = filepath.Dir(b)
 	)
 
-	os.Setenv("DB_REPOSITORY_ROOT_PATH", basepath)
+	os.Setenv("CORE_ROOT_PATH", basepath)
 }

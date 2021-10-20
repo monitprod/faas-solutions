@@ -8,7 +8,7 @@ import (
 	"runtime"
 	"strings"
 
-	"github.com/monitprod/db_repository/pkg/models"
+	"github.com/monitprod/core/pkg/models"
 )
 
 func GetBasepath() string {

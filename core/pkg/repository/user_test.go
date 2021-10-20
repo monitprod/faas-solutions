@@ -5,16 +5,16 @@ import (
 	"log"
 	"testing"
 
-	"github.com/monitprod/db_repository"
-	u "github.com/monitprod/db_repository/pkg/util"
+	"github.com/monitprod/core"
+	u "github.com/monitprod/core/pkg/util"
 )
 
 func TestUsersRepository(t *testing.T) {
 
 	ctx := context.Background()
-	db_repository.StartRepository(ctx)
+	core.StartRepository(ctx)
 
-	log.Println("DB Repository Started!")
+	log.Println("Core Started!")
 
 	userRepository := NewUserRepositoryMongoDB()
 
