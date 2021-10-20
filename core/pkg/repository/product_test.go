@@ -11,25 +11,24 @@ import (
 
 func TestProductsRepository(t *testing.T) {
 
-	ctx := context.Background()
-	core.StartRepository(ctx)
+	core.UseCoreSmp(func(ctx context.Context) {
 
-	log.Println("Core Started!")
+		productRepository := NewProductRepositoryMongoDB()
 
-	productRepository := NewProductRepositoryMongoDB()
+		products, err := productRepository.GetProducts(ctx,
+			GetProductsOptions{
+				Page: vo.PaginateOptions{
+					CurrentPage: 0,
+					PageSize:    1,
+				},
+			})
 
-	products, err := productRepository.GetProducts(ctx,
-		GetProductsOptions{
-			Page: vo.PaginateOptions{
-				CurrentPage: 0,
-				PageSize:    1,
-			},
-		})
+		if err != nil {
+			log.Fatalln("Error while get products from repository", err)
+		}
 
-	if err != nil {
-		log.Fatalln("Error while get products from repository", err)
-	}
+		log.Println(*products)
 
-	log.Println(*products)
+	})
 
 }

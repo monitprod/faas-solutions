@@ -11,25 +11,21 @@ import (
 
 func TestUsersRepository(t *testing.T) {
 
-	ctx := context.Background()
-	core.StartRepository(ctx)
+	core.UseCoreSmp(func(ctx context.Context) {
+		userRepository := NewUserRepositoryMongoDB()
 
-	log.Println("Core Started!")
+		users, err := userRepository.GetUsers(ctx,
+			GetUsersOptions{
+				Page: vo.PaginateOptions{
+					CurrentPage: 0,
+					PageSize:    1,
+				},
+			})
 
-	userRepository := NewUserRepositoryMongoDB()
+		if err != nil {
+			log.Fatalln("Error while get users from repository", err)
+		}
 
-	users, err := userRepository.GetUsers(ctx,
-		GetUsersOptions{
-			Page: vo.PaginateOptions{
-				CurrentPage: 0,
-				PageSize:    1,
-			},
-		})
-
-	if err != nil {
-		log.Fatalln("Error while get users from repository", err)
-	}
-
-	log.Println(*users)
-
+		log.Println(*users)
+	})
 }

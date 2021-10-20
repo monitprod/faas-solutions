@@ -23,9 +23,9 @@ import (
     "github.com/monitprod/core" 
 )
 
-ctx, _ := context.Background()
-
-core.StartRepository(ctx)
+core.UseCoreSmp(func(ctx context.Context) {
+    // Your code
+})
 
 ```
 
@@ -39,10 +39,36 @@ import (
     "github.com/monitprod/core/pkg/loaders/database"
 )
 
-ctx, _ := context.Background()
+core.UseCoreSmp(func(ctx context.Context) {
+    client := database.GetClient()
 
-core.StartRepository(ctx)
+    // Your code
+})
 
-client := database.GetClient()
+```
+
+## How to handler context and error?
+``` go
+import ( 
+    "context"
+    "github.com/monitprod/core" 
+    "github.com/monitprod/core/pkg/loaders/database"
+)
+
+ctx := context.Background()
+
+err := core.UseCore(ctx, func() error {
+    client := database.GetClient()
+
+    // Your code
+
+    return nil
+})
+
+if (err != nil) {
+
+    // Your error handling
+    
+}
 
 ```

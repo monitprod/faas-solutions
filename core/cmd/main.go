@@ -4,7 +4,6 @@ import (
 	"context"
 	"fmt"
 	"log"
-	"time"
 
 	"github.com/monitprod/core"
 	"github.com/monitprod/core/pkg/repository"
@@ -12,27 +11,23 @@ import (
 )
 
 func main() {
-	fmt.Println("Core Started!\n" +
-		"This execution is only for tests")
+	fmt.Println("This execution is only for tests")
 
-	ctx, _ := context.WithTimeout(context.Background(), 10*time.Second)
+	core.UseCoreSmp(func(ctx context.Context) {
+		userRepository := repository.NewUserRepositoryMongoDB()
 
-	core.StartRepository(ctx)
+		users, err := userRepository.GetUsers(ctx,
+			repository.GetUsersOptions{
+				Page: vo.PaginateOptions{
+					CurrentPage: 0,
+					PageSize:    1,
+				},
+			})
 
-	userRepository := repository.NewUserRepositoryMongoDB()
+		if err != nil {
+			log.Fatalln("Error while get users from repository", err)
+		}
 
-	users, err := userRepository.GetUsers(ctx,
-		repository.GetUsersOptions{
-			Page: vo.PaginateOptions{
-				CurrentPage: 0,
-				PageSize:    1,
-			},
-		})
-
-	if err != nil {
-		log.Fatalln("Error while get users from repository", err)
-	}
-
-	fmt.Println(*users)
-
+		fmt.Println(*users)
+	})
 }

@@ -43,7 +43,9 @@ func GetClient() *mongo.Client {
 
 func DisconnectClient(ctx context.Context) error {
 	if isClientStarted() {
-		return client.Disconnect(ctx)
+		err := client.Disconnect(ctx)
+		client = nil
+		return err
 	}
 
 	return nil

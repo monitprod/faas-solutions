@@ -10,7 +10,7 @@ import (
 	f "github.com/monitprod/send_email/pkg/interface/function"
 )
 
-const payloadFile = "payload.json"
+const payloadFile = "../../payload.json"
 
 func main() {
 	ctx := context.Background()
