@@ -12,6 +12,7 @@ import (
 
 type UserService interface {
 	GetUsers(ctx context.Context) (*[]m.User, error)
+	CountUsers(ctx context.Context) (*int64, error)
 }
 
 type UserServiceImp struct {
@@ -44,4 +45,15 @@ func (e *UserServiceImp) GetUsers(ctx context.Context) (*[]m.User, error) {
 	}
 
 	return users, nil
+}
+
+func (e *UserServiceImp) CountUsers(ctx context.Context) (*int64, error) {
+	count, err := e.UserRepository.Count(ctx, true)
+
+	if err != nil {
+		log.Fatalln("Error while count users from repository:\n", err)
+		return nil, err
+	}
+
+	return count, nil
 }

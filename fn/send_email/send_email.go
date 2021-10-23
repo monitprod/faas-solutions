@@ -17,6 +17,9 @@ import (
 var rootPath string
 
 func StartEnv() {
+	log.SetFlags(log.LstdFlags | log.Lmicroseconds)
+	log.Println("Starting Env. . .")
+
 	envPath := GetRootPath() + "/.env"
 	err := godotenv.Load(envPath)
 

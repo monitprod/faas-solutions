@@ -19,6 +19,7 @@ type GetProductsOptions struct {
 
 type ProductRepository interface {
 	GetProducts(ctx context.Context, opt GetProductsOptions) (*[]m.Product, error)
+	Count(ctx context.Context, estimated bool) (*int64, error)
 }
 
 type ProductRepositoryMongoDB struct {
@@ -55,4 +56,29 @@ func (u ProductRepositoryMongoDB) GetProducts(ctx context.Context, opt GetProduc
 	}
 
 	return &products, nil
+}
+
+// Count - "estimated" is more performatic, but less accurate
+func (p ProductRepositoryMongoDB) Count(ctx context.Context, estimated bool) (*int64, error) {
+	// Mongodb Client
+	client := database.GetClient()
+
+	productCollection := client.
+		Database(c.Database).
+		Collection(c.ProductCollection)
+
+	var count int64
+	var err error
+
+	if estimated {
+		count, err = productCollection.EstimatedDocumentCount(ctx)
+	} else {
+		count, err = productCollection.CountDocuments(ctx, bson.D{})
+	}
+
+	if err != nil {
+		log.Fatalln("Error while count product collection:", err)
+	}
+
+	return &count, nil
 }

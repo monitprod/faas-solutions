@@ -19,6 +19,7 @@ type GetUsersOptions struct {
 
 type UserRepository interface {
 	GetUsers(ctx context.Context, opt GetUsersOptions) (*[]m.User, error)
+	Count(ctx context.Context, estimated bool) (*int64, error)
 }
 
 type UserRepositoryMongoDB struct {
@@ -57,4 +58,29 @@ func (u UserRepositoryMongoDB) GetUsers(ctx context.Context, opt GetUsersOptions
 	}
 
 	return &users, nil
+}
+
+// Count - "estimated" is more performatic, but less accurate
+func (u UserRepositoryMongoDB) Count(ctx context.Context, estimated bool) (*int64, error) {
+	// Mongodb Client
+	client := database.GetClient()
+
+	userCollection := client.
+		Database(c.Database).
+		Collection(c.UserCollection)
+
+	var count int64
+	var err error
+
+	if estimated {
+		count, err = userCollection.EstimatedDocumentCount(ctx)
+	} else {
+		count, err = userCollection.CountDocuments(ctx, bson.D{})
+	}
+
+	if err != nil {
+		log.Fatalln("Error while count user collection:", err)
+	}
+
+	return &count, nil
 }
