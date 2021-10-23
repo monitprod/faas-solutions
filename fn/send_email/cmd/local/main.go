@@ -6,11 +6,10 @@ import (
 	"io/ioutil"
 	"log"
 
+	"github.com/monitprod/send_email"
 	"github.com/monitprod/send_email/pkg/handler"
-	f "github.com/monitprod/send_email/pkg/interface/function"
+	f "github.com/monitprod/send_email/pkg/vo/function"
 )
-
-const payloadFile = "../../payload.json"
 
 func main() {
 	ctx := context.Background()
@@ -27,6 +26,8 @@ func main() {
 }
 
 func startPayloadFromFile() f.EventPayload {
+	payloadFile := send_email.GetRootPath() + "/payload.json"
+
 	file, err := ioutil.ReadFile(payloadFile)
 
 	if err != nil {

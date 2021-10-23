@@ -9,7 +9,7 @@ import (
 
 func TestMountBody(t *testing.T) {
 
-	var bodyService BodyService = newBodyServiceImp()
+	var bodyService BodyService = NewBodyServiceImp()
 
 	str, _ := bodyService.MountBody(&mock.Products)
 

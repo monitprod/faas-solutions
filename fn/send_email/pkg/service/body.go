@@ -4,23 +4,11 @@ import (
 	"fmt"
 	"io/ioutil"
 	"log"
-	"path/filepath"
-	"runtime"
 	"strings"
 
 	"github.com/monitprod/core/pkg/models"
+	"github.com/monitprod/send_email"
 )
-
-func GetBasepath() string {
-	var (
-		_, b, _, _ = runtime.Caller(0)
-		basepath   = filepath.Dir(b)
-	)
-	return basepath
-}
-
-// TODO: this can be error in main.go
-var templateFile = "../static/body.html"
 
 type BodyService interface {
 	MountBody(products *[]models.Product) (*string, error)
@@ -29,11 +17,13 @@ type BodyService interface {
 type BodyServiceImp struct {
 }
 
-func newBodyServiceImp() BodyService {
+func NewBodyServiceImp() BodyService {
 	return &BodyServiceImp{}
 }
 
 func (e *BodyServiceImp) MountBody(products *[]models.Product) (*string, error) {
+
+	var templateFile = send_email.GetRootPath() + "/static/body.html"
 
 	// Read body template HTML
 	templateContent, err := ioutil.ReadFile(templateFile)

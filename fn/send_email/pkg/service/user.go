@@ -5,10 +5,9 @@ import (
 	"log"
 
 	m "github.com/monitprod/core/pkg/models"
-	"github.com/monitprod/core/pkg/repository"
 	r "github.com/monitprod/core/pkg/repository"
 	"github.com/monitprod/core/pkg/vo"
-	f "github.com/monitprod/send_email/pkg/interface/function"
+	f "github.com/monitprod/send_email/pkg/vo/function"
 )
 
 type UserService interface {
@@ -20,7 +19,7 @@ type UserServiceImp struct {
 	Payload        f.EventPayload
 }
 
-func newUserServiceImp(
+func NewUserServiceImp(
 	userRepository r.UserRepository,
 	payload f.EventPayload) UserService {
 
@@ -32,7 +31,7 @@ func newUserServiceImp(
 
 func (e *UserServiceImp) GetUsers(ctx context.Context) (*[]m.User, error) {
 
-	users, err := e.UserRepository.GetUsers(ctx, repository.GetUsersOptions{
+	users, err := e.UserRepository.GetUsers(ctx, r.GetUsersOptions{
 		Page: vo.PaginateOptions{
 			CurrentPage: e.Payload.Execution,
 			PageSize:    e.Payload.UsersPerExecution,
