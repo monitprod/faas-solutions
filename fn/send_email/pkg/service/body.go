@@ -7,7 +7,8 @@ import (
 	"strings"
 
 	"github.com/monitprod/core/pkg/models"
-	"github.com/monitprod/send_email"
+
+	"github.com/monitprod/send_email/pkg/util"
 )
 
 type BodyService interface {
@@ -23,7 +24,7 @@ func NewBodyServiceImp() BodyService {
 
 func (e *BodyServiceImp) MountBody(products *[]models.Product) (*string, error) {
 
-	var templateFile = send_email.GetRootPath() + "/static/body.html"
+	var templateFile = util.GetRootPath() + "/static/body.html"
 
 	// Read body template HTML
 	templateContent, err := ioutil.ReadFile(templateFile)

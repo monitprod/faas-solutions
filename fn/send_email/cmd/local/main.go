@@ -6,9 +6,9 @@ import (
 	"io/ioutil"
 	"log"
 
-	"github.com/monitprod/send_email"
 	c "github.com/monitprod/send_email/pkg/constant"
 	"github.com/monitprod/send_email/pkg/handler"
+	"github.com/monitprod/send_email/pkg/util"
 	f "github.com/monitprod/send_email/pkg/vo/function"
 )
 
@@ -34,7 +34,7 @@ func localFunc(payload *f.EventPayload) {
 }
 
 func startPayloadFromFile() *f.EventPayload {
-	payloadFile := send_email.GetRootPath() + "/payload.json"
+	payloadFile := util.GetRootPath() + "/payload.json"
 
 	file, err := ioutil.ReadFile(payloadFile)
 

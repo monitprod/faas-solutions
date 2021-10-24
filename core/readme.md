@@ -3,7 +3,7 @@
 ## Env Variables
 
     CORE_MONGO_URI=<MONGO_DB_URI>
-    CORE_ROOT_PATH=<ROOT_PATH> # Read-only, don't modify it
+    CORE_ROOT_PATH=<ROOT_PATH>
 
 ## How to use?
 
@@ -11,25 +11,34 @@
 
         go get github.com/monitprod/core
 
-2. Duplicate and rename file .example.env to .env
 
-3. Configure .env file
+4. Start Env Variables
 
-4. Start core
+5. Start core
 
-``` go
-import ( 
-    "context"
-    "github.com/monitprod/core" 
-)
 
-core.UseCoreSmp(func(ctx context.Context) {
-    // Your code
-})
+    ``` go
+    import ( 
+        "context"
+        "github.com/monitprod/core" 
+    )
 
-```
+    core.UseCoreSmp(func(ctx context.Context) {
+        // Your code
+    })
+    ```
 
-5. Are you free to use ``` pkg/repository ``` and other packages of this project
+    Are you free to use ``` pkg/repository ``` and other packages of this project
+
+
+## You want to test direct core?
+Follow this steps
+
+1. Duplicate and rename file .example.env to .env
+
+2. Configure .env file
+
+3. Are you free to run tests
 
 ## How to use mongo db client?
 ``` go
@@ -44,7 +53,6 @@ core.UseCoreSmp(func(ctx context.Context) {
 
     // Your code
 })
-
 ```
 
 ## How to handler context and error?
@@ -70,5 +78,4 @@ if (err != nil) {
     // Your error handling
     
 }
-
 ```

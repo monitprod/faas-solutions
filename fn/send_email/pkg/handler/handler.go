@@ -5,13 +5,13 @@ import (
 	"fmt"
 
 	"github.com/monitprod/core"
-	"github.com/monitprod/send_email"
 
+	"github.com/monitprod/send_email/pkg/util"
 	f "github.com/monitprod/send_email/pkg/vo/function"
 )
 
 func HandleRequest(ctx context.Context, payload f.EventPayload) (f.Response, error) {
-	send_email.StartEnv()
+	util.StartEnv()
 
 	core.UseCore(ctx, func() error {
 		return sendEmailHandler(ctx, payload)

@@ -3,12 +3,10 @@ package core
 import (
 	"context"
 	"log"
-	"os"
-	"path/filepath"
-	"runtime"
 
 	"github.com/joho/godotenv"
 	"github.com/monitprod/core/pkg/loaders/database"
+	"github.com/monitprod/core/pkg/util"
 )
 
 // UseCoreSmp is simple form of UseCore method
@@ -38,9 +36,7 @@ func UseCore(ctx context.Context, execution func() error) error {
 }
 
 func start(ctx context.Context) {
-	startRootPath()
-
-	err := godotenv.Load(getDefaultEnvPath())
+	err := godotenv.Load(util.GetRootPath())
 
 	if err != nil {
 		log.Println("INFO: Core dot env not initialized:", err)
@@ -52,18 +48,11 @@ func start(ctx context.Context) {
 }
 
 func close(ctx context.Context) {
-	database.DisconnectClient(ctx)
-}
+	err := database.DisconnectClient(ctx)
 
-func getDefaultEnvPath() string {
-	return os.Getenv("CORE_ROOT_PATH") + "\\.env"
-}
+	if err != nil {
+		log.Printf("Is not possible disconnect client,\n" +
+			"if you running locally, don't worry :)")
+	}
 
-func startRootPath() {
-	var (
-		_, b, _, _ = runtime.Caller(0)
-		basepath   = filepath.Dir(b)
-	)
-
-	os.Setenv("CORE_ROOT_PATH", basepath)
 }
