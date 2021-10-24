@@ -2,6 +2,7 @@ package database
 
 import (
 	"context"
+	"errors"
 	"log"
 	"os"
 
@@ -34,7 +35,13 @@ func ConnectClient(ctx context.Context) *mongo.Client {
 }
 
 func GetClient() *mongo.Client {
-	if isClientStarted() {
+	isStarted, err := isClientStarted()
+	if err != nil {
+		log.Fatalln(err)
+		return nil
+	}
+
+	if isStarted {
 		return client
 	}
 
@@ -42,19 +49,23 @@ func GetClient() *mongo.Client {
 }
 
 func DisconnectClient(ctx context.Context) error {
-	if isClientStarted() {
+	isStarted, err := isClientStarted()
+	if err != nil {
+		return err
+	}
+
+	if isStarted {
 		err := client.Disconnect(ctx)
 		client = nil
 		return err
 	}
 
-	return nil
+	return errors.New("DisconnectClient unrecognized error")
 }
 
-func isClientStarted() bool {
+func isClientStarted() (bool, error) {
 	if client == nil {
-		log.Fatalln("Mongo Client not started, use core.StartRepository(ctx) to start")
-		return false
+		return false, errors.New("mongo client not started, use core.StartRepository(ctx) to start")
 	}
-	return true
+	return true, nil
 }
