@@ -3,12 +3,10 @@ package service
 import (
 	"encoding/json"
 	"log"
-	"os"
 
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/aws/session"
 	"github.com/aws/aws-sdk-go/service/lambda"
-	"github.com/monitprod/send_email/pkg/vo/function"
 )
 
 // FunctionService is a service to execute new FaaS Function
@@ -20,7 +18,7 @@ type FunctionBuilder struct {
 	Payload map[string]interface{}
 	IsLocal bool
 
-	LocalFunc func(payload *function.EventPayload)
+	LocalFunc func(payload map[string]interface{})
 
 	// ServiceOptions can be nil if execution is locally
 	ServiceOptions *ServiceOptions
@@ -50,13 +48,7 @@ func (f FunctionServiceImp) Exec() error {
 func (f FunctionServiceImp) localExec() error {
 	log.Println("Start local function execution")
 
-	payload, err := function.EventPayloadFromMap(f.Builder.Payload)
-
-	if err != nil {
-		return err
-	}
-
-	f.Builder.LocalFunc(payload)
+	f.Builder.LocalFunc(f.Builder.Payload)
 
 	return nil
 }
@@ -82,8 +74,8 @@ func (f FunctionServiceImp) lambdaExec() error {
 
 	payload, err := json.Marshal(request)
 	if err != nil {
-		log.Println("Error marshalling MyGetItemsFunction request")
-		os.Exit(0)
+		log.Fatalln("Error marshalling function request:", err)
+		return err
 	}
 
 	invokeInput := lambda.InvokeInput{
@@ -99,8 +91,8 @@ func (f FunctionServiceImp) lambdaExec() error {
 	_, err = client.Invoke(&invokeInput)
 
 	if err != nil {
-		log.Println("Error calling MyGetItemsFunction")
-		os.Exit(0)
+		log.Fatalln("Error calling function:", err)
+		return err
 	}
 
 	return nil

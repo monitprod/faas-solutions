@@ -9,18 +9,20 @@ import (
 	"github.com/monitprod/core/pkg/vo"
 )
 
+var getUsersOptionsMock = GetUsersOptions{
+	Page: vo.PaginateOptions{
+		CurrentPage: 1,
+		PageSize:    1,
+	},
+}
+
 func TestUsersRepository(t *testing.T) {
 
 	core.UseCoreSmp(func(ctx context.Context) {
 		userRepository := NewUserRepositoryMongoDB()
 
 		users, err := userRepository.GetUsers(ctx,
-			GetUsersOptions{
-				Page: vo.PaginateOptions{
-					CurrentPage: 0,
-					PageSize:    1,
-				},
-			})
+			getUsersOptionsMock)
 
 		if err != nil {
 			log.Fatalln("Error while get users from repository", err)

@@ -36,7 +36,7 @@ func UseCore(ctx context.Context, execution func() error) error {
 }
 
 func start(ctx context.Context) {
-	err := godotenv.Load(util.GetRootPath())
+	err := godotenv.Load(util.GetRootPath() + "/.env")
 
 	if err != nil {
 		log.Println("INFO: Core dot env not initialized:", err)

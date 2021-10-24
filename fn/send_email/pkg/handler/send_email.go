@@ -54,9 +54,16 @@ func runNewFunction(ctx context.Context, payload f.EventPayload) error {
 	localMainFunc, _ := ctx.Value(c.LocalMainFunc).(func(payload *f.EventPayload))
 
 	builder := coreService.FunctionBuilder{
-		IsLocal:   isLocal,
-		LocalFunc: localMainFunc,
-		Payload:   payload.ToMap(),
+		IsLocal: isLocal,
+		LocalFunc: func(mapPayload map[string]interface{}) {
+			p, err := f.EventPayloadFromMap(mapPayload)
+			if err != nil {
+				log.Fatalf("Error while serialize event payload from map")
+			}
+
+			localMainFunc(p)
+		},
+		Payload: payload.ToMap(),
 	}
 
 	if !isLocal {

@@ -9,6 +9,13 @@ import (
 	"github.com/monitprod/core/pkg/vo"
 )
 
+var getProductsOptionsMock = GetProductsOptions{
+	Page: vo.PaginateOptions{
+		CurrentPage: 1,
+		PageSize:    1,
+	},
+}
+
 func TestProductsRepository(t *testing.T) {
 
 	core.UseCoreSmp(func(ctx context.Context) {
@@ -16,12 +23,7 @@ func TestProductsRepository(t *testing.T) {
 		productRepository := NewProductRepositoryMongoDB()
 
 		products, err := productRepository.GetProducts(ctx,
-			GetProductsOptions{
-				Page: vo.PaginateOptions{
-					CurrentPage: 0,
-					PageSize:    1,
-				},
-			})
+			getProductsOptionsMock)
 
 		if err != nil {
 			log.Fatalln("Error while get products from repository", err)
