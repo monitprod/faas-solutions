@@ -5,8 +5,9 @@ import (
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
+// PaginateFind starts at index 1
 func PaginateFind(findOpts *options.FindOptions, pgOpts vo.PaginateOptions) *options.FindOptions {
-	skipElements := pgOpts.PageSize * pgOpts.CurrentPage
+	skipElements := pgOpts.PageSize * (pgOpts.CurrentPage - 1)
 
 	findOpts.Limit = &pgOpts.PageSize
 	findOpts.Skip = &skipElements

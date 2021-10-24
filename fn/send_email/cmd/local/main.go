@@ -7,16 +7,24 @@ import (
 	"log"
 
 	"github.com/monitprod/send_email"
+	c "github.com/monitprod/send_email/pkg/constant"
 	"github.com/monitprod/send_email/pkg/handler"
 	f "github.com/monitprod/send_email/pkg/vo/function"
 )
 
 func main() {
-	ctx := context.Background()
+	localFunc(nil)
+}
 
-	payload := startPayloadFromFile()
+func localFunc(payload *f.EventPayload) {
+	ctx := context.WithValue(context.Background(), c.IsLocal, true)
+	ctx = context.WithValue(ctx, c.LocalMainFunc, localFunc)
 
-	HandleRequest, err := handler.HandleRequest(ctx, payload)
+	if payload == nil {
+		payload = startPayloadFromFile()
+	}
+
+	HandleRequest, err := handler.HandleRequest(ctx, *payload)
 
 	if err != nil {
 		log.Fatalln("Handle request failure:\n", err)
@@ -25,7 +33,7 @@ func main() {
 	log.Printf("%+v", HandleRequest)
 }
 
-func startPayloadFromFile() f.EventPayload {
+func startPayloadFromFile() *f.EventPayload {
 	payloadFile := send_email.GetRootPath() + "/payload.json"
 
 	file, err := ioutil.ReadFile(payloadFile)
@@ -42,5 +50,5 @@ func startPayloadFromFile() f.EventPayload {
 		log.Fatalln("Failed to unmarshal payload:\n", err)
 	}
 
-	return payload
+	return &payload
 }

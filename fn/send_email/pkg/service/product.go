@@ -35,7 +35,7 @@ func (e *ProductServiceImp) GetProducts(ctx context.Context) (*[]m.Product, erro
 
 	products, err := e.ProductRepository.GetProducts(ctx, r.GetProductsOptions{
 		Page: vo.PaginateOptions{
-			CurrentPage: 0,
+			CurrentPage: 1,
 			PageSize:    limitProduct,
 		},
 	})

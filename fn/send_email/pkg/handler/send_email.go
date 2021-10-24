@@ -3,10 +3,13 @@ package handler
 import (
 	"context"
 	"log"
+	"os"
 
 	m "github.com/monitprod/core/pkg/models"
 	r "github.com/monitprod/core/pkg/repository"
+	coreService "github.com/monitprod/core/pkg/service"
 
+	c "github.com/monitprod/send_email/pkg/constant"
 	s "github.com/monitprod/send_email/pkg/service"
 	f "github.com/monitprod/send_email/pkg/vo/function"
 )
@@ -34,14 +37,38 @@ func sendEmailHandler(ctx context.Context, payload f.EventPayload) error {
 	}
 
 	if fetchMore(payload, *usersInfo.Count) {
-		runNewFunction()
+		newPayload := iterateExecution(payload)
+		runNewFunction(ctx, newPayload)
 	}
 
 	return nil
 }
 
-func runNewFunction() {
+func iterateExecution(payload f.EventPayload) f.EventPayload {
+	payload.Execution++
+	return payload
+}
 
+func runNewFunction(ctx context.Context, payload f.EventPayload) error {
+	isLocal, _ := ctx.Value(c.IsLocal).(bool)
+	localMainFunc, _ := ctx.Value(c.LocalMainFunc).(func(payload *f.EventPayload))
+
+	builder := coreService.FunctionBuilder{
+		IsLocal:   isLocal,
+		LocalFunc: localMainFunc,
+		Payload:   payload.ToMap(),
+	}
+
+	if !isLocal {
+		builder.ServiceOptions = &coreService.ServiceOptions{
+			Region:       os.Getenv("SE_FUNCTION_REGION"),
+			FunctionName: os.Getenv("SE_FUNCTION_NAME"),
+		}
+	}
+
+	funcService := coreService.NewFunctionServiceImp(builder)
+
+	return funcService.Exec()
 }
 
 func fetchMore(p f.EventPayload, countUsers int64) bool {
