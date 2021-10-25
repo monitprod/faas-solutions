@@ -25,7 +25,3 @@ func EventPayloadFromMap(m map[string]interface{}) (*EventPayload, error) {
 	}
 	return &e, err
 }
-
-type Response struct {
-	Message string `json:"message:"`
-}

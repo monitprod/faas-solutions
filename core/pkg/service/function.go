@@ -8,6 +8,7 @@ import (
 	"github.com/aws/aws-sdk-go/aws/credentials"
 	"github.com/aws/aws-sdk-go/aws/session"
 	"github.com/aws/aws-sdk-go/service/lambda"
+	"github.com/monitprod/core/pkg/util/local"
 )
 
 // FunctionService is a service to execute new FaaS Function
@@ -19,7 +20,7 @@ type FunctionBuilder struct {
 	Payload map[string]interface{}
 	IsLocal bool
 
-	LocalFunc func(payload map[string]interface{})
+	LocalFunc local.LocalFunc
 
 	// ServiceOptions can be nil if execution is locally
 	ServiceOptions *ServiceOptions
@@ -56,7 +57,7 @@ func (f FunctionServiceImp) Exec() error {
 func (f FunctionServiceImp) localExec() error {
 	log.Println("Start local function execution")
 
-	f.Builder.LocalFunc(f.Builder.Payload)
+	f.Builder.LocalFunc(&f.Builder.Payload)
 
 	return nil
 }

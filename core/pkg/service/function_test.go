@@ -7,6 +7,7 @@ import (
 	"testing"
 
 	"github.com/monitprod/core"
+	"github.com/monitprod/core/pkg/util/local"
 )
 
 var payloadMock = map[string]interface{}{
@@ -14,7 +15,7 @@ var payloadMock = map[string]interface{}{
 	"usersPerExecution": 1,
 }
 
-var localFuncMock = func(payload map[string]interface{}) {
+var localFuncMock local.LocalFunc = func(payload *map[string]interface{}) {
 	// My func. . .
 }
 

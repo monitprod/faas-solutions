@@ -8,8 +8,9 @@ import (
 	m "github.com/monitprod/core/pkg/models"
 	r "github.com/monitprod/core/pkg/repository"
 	coreService "github.com/monitprod/core/pkg/service"
+	"github.com/monitprod/core/pkg/util/local"
 
-	c "github.com/monitprod/send_email/pkg/constant"
+	c "github.com/monitprod/core/pkg/constant"
 	s "github.com/monitprod/send_email/pkg/service"
 	f "github.com/monitprod/send_email/pkg/vo/function"
 )
@@ -51,19 +52,12 @@ func iterateExecution(payload f.EventPayload) f.EventPayload {
 
 func runNewFunction(ctx context.Context, payload f.EventPayload) error {
 	isLocal, _ := ctx.Value(c.IsLocal).(bool)
-	localMainFunc, _ := ctx.Value(c.LocalMainFunc).(func(payload *f.EventPayload))
+	localMainFunc, _ := ctx.Value(c.LocalMainFunc).(local.LocalFunc)
 
 	builder := coreService.FunctionBuilder{
-		IsLocal: isLocal,
-		LocalFunc: func(mapPayload map[string]interface{}) {
-			p, err := f.EventPayloadFromMap(mapPayload)
-			if err != nil {
-				log.Fatalf("Error while serialize event payload from map")
-			}
-
-			localMainFunc(p)
-		},
-		Payload: payload.ToMap(),
+		IsLocal:   isLocal,
+		LocalFunc: localMainFunc,
+		Payload:   payload.ToMap(),
 	}
 
 	if !isLocal {

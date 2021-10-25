@@ -10,14 +10,21 @@ import (
 	f "github.com/monitprod/send_email/pkg/vo/function"
 )
 
-func HandleRequest(ctx context.Context, payload f.EventPayload) (f.Response, error) {
+func HandleRequest(ctx context.Context, payload map[string]interface{}) (map[string]interface{}, error) {
 	util.StartEnv()
 
 	core.UseCore(ctx, func() error {
-		return sendEmailHandler(ctx, payload)
+		p, err := f.EventPayloadFromMap(payload)
+		if err != nil {
+			return err
+		}
+
+		return sendEmailHandler(ctx, *p)
 	})
 
-	return f.Response{
+	res := f.Response{
 		Message: fmt.Sprintf("Lambda Started!\n%+v", payload),
-	}, nil
+	}
+
+	return res.ToMap(), nil
 }
