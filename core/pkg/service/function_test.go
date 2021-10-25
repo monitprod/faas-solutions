@@ -45,6 +45,11 @@ func TestExecLambda(t *testing.T) {
 			ServiceOptions: &ServiceOptions{
 				Region:       os.Getenv("CORE_AWS_REGION"),
 				FunctionName: os.Getenv("CORE_AWS_FUNCTION_NAME"),
+				Credentials: Credentials{
+					AccessKey: os.Getenv("CORE_AWS_ACCESS_KEY_ID"),
+					Secret:    os.Getenv("CORE_AWS_SECRET"),
+					Token:     os.Getenv("CORE_AWS_TOKEN"),
+				},
 			},
 		}
 

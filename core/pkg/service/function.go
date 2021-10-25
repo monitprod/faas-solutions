@@ -5,6 +5,7 @@ import (
 	"log"
 
 	"github.com/aws/aws-sdk-go/aws"
+	"github.com/aws/aws-sdk-go/aws/credentials"
 	"github.com/aws/aws-sdk-go/aws/session"
 	"github.com/aws/aws-sdk-go/service/lambda"
 )
@@ -27,6 +28,13 @@ type FunctionBuilder struct {
 type ServiceOptions struct {
 	Region       string
 	FunctionName string
+	Credentials  Credentials
+}
+
+type Credentials struct {
+	AccessKey string
+	Secret    string
+	Token     string // Is Optional
 }
 
 type FunctionServiceImp struct {
@@ -64,7 +72,14 @@ func (f FunctionServiceImp) lambdaExec() error {
 
 	serviceOptions := f.Builder.ServiceOptions
 
+	cred := f.Builder.ServiceOptions.Credentials
+
 	config := aws.Config{
+		Credentials: credentials.NewStaticCredentials(
+			cred.AccessKey,
+			cred.Secret,
+			cred.Token,
+		),
 		Region: aws.String(serviceOptions.Region),
 	}
 

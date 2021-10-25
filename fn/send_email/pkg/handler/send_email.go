@@ -70,6 +70,10 @@ func runNewFunction(ctx context.Context, payload f.EventPayload) error {
 		builder.ServiceOptions = &coreService.ServiceOptions{
 			Region:       os.Getenv("SE_FUNCTION_REGION"),
 			FunctionName: os.Getenv("SE_FUNCTION_NAME"),
+			Credentials: coreService.Credentials{
+				AccessKey: os.Getenv("SE_AWS_ACCESS_KEY_ID"),
+				Secret:    os.Getenv("SE_AWS_SECRET"),
+			},
 		}
 	}
 
