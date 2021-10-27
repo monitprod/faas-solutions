@@ -1,0 +1,62 @@
+openapi: 3.0.1
+info:
+  title: Swagger Monitprod User API
+  description: 'This is a API with features for client users'
+  termsOfService: http://swagger.io/terms/
+  version: 1.0.0
+externalDocs:
+  description: Github
+  url: https://github.com/monitprod/monitprod-back
+servers:
+- url: https://localhost
+tags:
+- name: User
+  description: User resources
+- name: Product
+  description: Product resources
+paths:
+  /products:
+    get:
+      tags:
+      - Product
+      summary: List Products
+      description: List available products 
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Product'
+        400:
+          description: Invalid status value
+          content: {}
+  /sign:
+    post:
+      tags:
+      - User
+      summary: Sign User
+      description: This sign user from email
+      requestBody:
+        description: Sign user
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SignUser'
+              
+        required: true
+      responses:
+        201:
+          description: successful operation
+          content: {}
+      x-codegen-request-body-name: body
+components:
+  schemas:
+    Product: {}
+    SignUser: 
+      type: object
+      properties:
+        email:
+          type: string

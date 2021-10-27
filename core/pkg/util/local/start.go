@@ -26,9 +26,11 @@ type StartBuilder struct {
 	PayloadFile string // If Payload exists, it will not be read
 }
 
+// TODO: Document this
 func Start(
 	b StartBuilder,
 ) {
+	// TODO: Document this
 	ctx := context.WithValue(context.Background(), c.IsLocal, true)
 	ctx = context.WithValue(ctx, c.LocalMainFunc, b.LocalFunc)
 

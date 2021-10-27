@@ -1,0 +1,14 @@
+{
+    "resource": "", // The resource path defined in API Gateway
+    "path": "",     // The url path for the caller
+    "httpMethod": "",
+    "headers": { "": "" },
+    "multiValueHeaders": { [ "" ] },
+    "queryStringParameters": { [ "" ] },
+    "multiValueQueryStringParameters":  { [ "" ] },
+    "pathParameters": { "": "" },
+    "stageVariables": { "": "" },
+    "requestContext": { "": "" },
+    "body" : "",
+    "isBase64Encoded": false
+}
