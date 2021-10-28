@@ -1,4 +1,4 @@
-package handler
+package product
 
 import (
 	"context"
@@ -13,7 +13,7 @@ import (
 	s "github.com/monitprod/user_api/pkg/service"
 )
 
-func handleProductRequest(ctx context.Context, request events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse, error) {
+func HandleProductRequest(ctx context.Context, request events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse, error) {
 	var products *[]models.Product
 
 	products, err := getProductsHandler(ctx, request)
