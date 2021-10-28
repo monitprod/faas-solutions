@@ -13,7 +13,7 @@ type Route struct {
 }
 
 type HandleFuncGateway = func(context.Context, events.APIGatewayProxyRequest) (
-	events.APIGatewayProxyResponse, error,
+	*events.APIGatewayProxyResponse, error,
 )
 
 var Routes = map[Route]HandleFuncGateway{

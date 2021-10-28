@@ -3,7 +3,6 @@ package product
 import (
 	"context"
 	"encoding/json"
-	"fmt"
 	"log"
 
 	"github.com/aws/aws-lambda-go/events"
@@ -13,31 +12,29 @@ import (
 	s "github.com/monitprod/user_api/pkg/service"
 )
 
-func HandleProductRequest(ctx context.Context, request events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse, error) {
+type ProductsResponse struct {
+	Products *[]models.Product `json:"products"`
+}
+
+func HandleProductRequest(ctx context.Context, request events.APIGatewayProxyRequest) (*events.APIGatewayProxyResponse, error) {
 	var products *[]models.Product
 
 	products, err := getProductsHandler(ctx, request)
 	if err != nil {
-		return events.APIGatewayProxyResponse{
-			Body:       err.Error(),
-			StatusCode: 500,
-		}, nil
+		return nil, err
 	}
 
-	res := map[string]interface{}{
-		"products": *products,
+	res := ProductsResponse{
+		Products: products,
 	}
 
-	resJsonB, err := json.Marshal(res)
+	resJson, err := json.Marshal(res)
 	if err != nil {
-		return events.APIGatewayProxyResponse{
-			Body:       err.Error(),
-			StatusCode: 500,
-		}, nil
+		return nil, err
 	}
 
-	return events.APIGatewayProxyResponse{
-		Body:       fmt.Sprintf("%s", resJsonB),
+	return &events.APIGatewayProxyResponse{
+		Body:       string(resJson),
 		StatusCode: 200,
 	}, nil
 }

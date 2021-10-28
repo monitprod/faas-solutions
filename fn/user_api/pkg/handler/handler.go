@@ -18,13 +18,13 @@ func HandleRequest(ctx context.Context, payload map[string]interface{}) (map[str
 		return nil, err
 	}
 
-	var res events.APIGatewayProxyResponse
+	var res *events.APIGatewayProxyResponse
 	err = core.UseCore(ctx, func() (err error) {
 		res, err = route.HandleAPIGatewayRoutes(ctx, *req)
 		return err
 	})
 
-	return responseToMap(&res), err
+	return responseToMap(res), err
 }
 
 func responseToMap(e *events.APIGatewayProxyResponse) (res map[string]interface{}) {
