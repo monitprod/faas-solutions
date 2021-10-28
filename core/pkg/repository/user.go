@@ -20,6 +20,7 @@ type GetUsersOptions struct {
 type UserRepository interface {
 	GetUsers(ctx context.Context, opt GetUsersOptions) (*[]m.User, error)
 	Count(ctx context.Context, estimated bool) (*int64, error)
+	Create(ctx context.Context, user *m.User) error
 }
 
 type UserRepositoryMongoDB struct {
@@ -83,4 +84,22 @@ func (u UserRepositoryMongoDB) Count(ctx context.Context, estimated bool) (*int6
 	}
 
 	return &count, nil
+}
+
+func (u UserRepositoryMongoDB) Create(ctx context.Context, user *m.User) error {
+	// Mongodb Client
+	client := database.GetClient()
+
+	userCollection := client.
+		Database(c.Database).
+		Collection(c.UserCollection)
+
+	_, err := userCollection.InsertOne(ctx, *user)
+
+	if err != nil {
+		log.Fatalln("Error while create user:", err)
+		return err
+	}
+
+	return nil
 }

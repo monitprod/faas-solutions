@@ -5,6 +5,7 @@ import (
 
 	"github.com/aws/aws-lambda-go/events"
 	"github.com/monitprod/user_api/pkg/handler/product"
+	"github.com/monitprod/user_api/pkg/handler/user"
 )
 
 type Route struct {
@@ -19,5 +20,5 @@ type HandleFuncGateway = func(context.Context, events.APIGatewayProxyRequest) (
 var Routes = map[Route]HandleFuncGateway{
 	// Use lower case!
 	{Method: "get", Path: "/products"}: product.HandleProductRequest,
-	{Method: "put", Path: "/sign"}:     product.HandleProductRequest,
+	{Method: "post", Path: "/sign"}:    user.HandleUserRequest,
 }

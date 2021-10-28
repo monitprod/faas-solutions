@@ -46,6 +46,7 @@ func NewFunctionServiceImp(builder FunctionBuilder) FunctionService {
 	return &FunctionServiceImp{builder}
 }
 
+// TODO: Document this
 func (f FunctionServiceImp) Exec() error {
 	if f.Builder.IsLocal {
 		return f.localExec()
