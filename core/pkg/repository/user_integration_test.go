@@ -4,7 +4,7 @@ package repository
 
 import (
 	"context"
-	"log"
+	log "github.com/sirupsen/logrus"
 	"testing"
 
 	"github.com/monitprod/core"
@@ -27,7 +27,7 @@ func TestUsersRepository(t *testing.T) {
 			getUsersOptionsMock)
 
 		if err != nil {
-			log.Fatalln("Error while get users from repository", err)
+			log.Errorln("Error while get users from repository", err)
 		}
 
 		log.Println(*users)

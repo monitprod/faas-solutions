@@ -2,7 +2,8 @@ package service
 
 import (
 	"context"
-	"log"
+
+	log "github.com/sirupsen/logrus"
 
 	m "github.com/monitprod/core/pkg/models"
 	r "github.com/monitprod/core/pkg/repository"
@@ -39,7 +40,7 @@ func (e *ProductServiceImp) GetProducts(ctx context.Context) (*[]m.Product, erro
 	})
 
 	if err != nil {
-		log.Fatalln("Error while get products from repository:\n", err)
+		log.Errorln("Error while get products from repository:\n", err)
 		return nil, err
 	}
 
@@ -50,7 +51,7 @@ func (e *ProductServiceImp) CountProducts(ctx context.Context) (*int64, error) {
 	count, err := e.ProductRepository.Count(ctx, true)
 
 	if err != nil {
-		log.Fatalln("Error while count products from repository:\n", err)
+		log.Errorln("Error while count products from repository:\n", err)
 		return nil, err
 	}
 

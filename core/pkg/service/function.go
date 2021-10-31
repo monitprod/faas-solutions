@@ -2,7 +2,8 @@ package service
 
 import (
 	"encoding/json"
-	"log"
+
+	log "github.com/sirupsen/logrus"
 
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/aws/credentials"
@@ -91,7 +92,7 @@ func (f FunctionServiceImp) lambdaExec() error {
 
 	payload, err := json.Marshal(request)
 	if err != nil {
-		log.Fatalln("Error marshalling function request:", err)
+		log.Errorln("Error marshalling function request:", err)
 		return err
 	}
 
@@ -108,7 +109,7 @@ func (f FunctionServiceImp) lambdaExec() error {
 	_, err = client.Invoke(&invokeInput)
 
 	if err != nil {
-		log.Fatalln("Error calling function:", err)
+		log.Errorln("Error calling function:", err)
 		return err
 	}
 

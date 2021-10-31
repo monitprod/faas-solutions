@@ -1,8 +1,9 @@
 package service
 
 import (
-	"log"
 	"testing"
+
+	log "github.com/sirupsen/logrus"
 
 	"github.com/monitprod/core/pkg/util/local"
 )
@@ -29,7 +30,7 @@ func TestExecLocal(t *testing.T) {
 
 	err := funcService.Exec()
 	if err != nil {
-		log.Fatalln("Error while execute new FaaS function:", err)
+		log.Errorln("Error while execute new FaaS function:", err)
 	}
 
 }

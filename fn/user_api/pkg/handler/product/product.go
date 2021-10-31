@@ -3,7 +3,8 @@ package product
 import (
 	"context"
 	"encoding/json"
-	"log"
+
+	log "github.com/sirupsen/logrus"
 
 	"github.com/aws/aws-lambda-go/events"
 	"github.com/monitprod/core/pkg/models"
@@ -46,7 +47,7 @@ func getProductsHandler(ctx context.Context, request events.APIGatewayProxyReque
 
 	products, err := productService.GetProducts(ctx)
 	if err != nil {
-		log.Fatalln("Error while get products from product service", err)
+		log.Errorln("Error while get products from product service", err)
 		return nil, err
 	}
 

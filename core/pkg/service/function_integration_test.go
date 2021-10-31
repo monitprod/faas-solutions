@@ -4,7 +4,7 @@ package service
 
 import (
 	"context"
-	"log"
+	log "github.com/sirupsen/logrus"
 	"os"
 	"testing"
 
@@ -36,7 +36,7 @@ func TestExecLambda(t *testing.T) {
 
 		err := funcService.Exec()
 		if err != nil {
-			log.Fatalln("Error while execute new FaaS function:", err)
+			log.Errorln("Error while execute new FaaS function:", err)
 		}
 	})
 

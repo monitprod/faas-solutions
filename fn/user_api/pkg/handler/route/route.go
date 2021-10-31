@@ -3,8 +3,9 @@ package route
 import (
 	"context"
 	"errors"
-	"log"
 	"strings"
+
+	log "github.com/sirupsen/logrus"
 
 	"github.com/aws/aws-lambda-go/events"
 	"github.com/monitprod/user_api/pkg/middle"

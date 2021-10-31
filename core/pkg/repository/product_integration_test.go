@@ -4,7 +4,7 @@ package repository
 
 import (
 	"context"
-	"log"
+	log "github.com/sirupsen/logrus"
 	"testing"
 
 	"github.com/monitprod/core"
@@ -28,7 +28,7 @@ func TestProductsRepository(t *testing.T) {
 			getProductsOptionsMock)
 
 		if err != nil {
-			log.Fatalln("Error while get products from repository", err)
+			log.Errorln("Error while get products from repository", err)
 		}
 
 		log.Println(*products)

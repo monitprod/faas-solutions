@@ -2,7 +2,8 @@ package repository
 
 import (
 	"context"
-	"log"
+
+	log "github.com/sirupsen/logrus"
 
 	c "github.com/monitprod/core/pkg/constant"
 	"github.com/monitprod/core/pkg/loaders/database"
@@ -49,12 +50,12 @@ func (u UserRepositoryMongoDB) GetUsers(ctx context.Context, opt GetUsersOptions
 	)
 
 	if err != nil {
-		log.Fatalln("Error while find user collection:", err)
+		log.Errorln("Error while find user collection:", err)
 		return nil, err
 	}
 
 	if err = cursor.All(ctx, &users); err != nil {
-		log.Fatalln("Error while cursor all users of user collection:", err)
+		log.Errorln("Error while cursor all users of user collection:", err)
 		return nil, err
 	}
 
@@ -80,7 +81,7 @@ func (u UserRepositoryMongoDB) Count(ctx context.Context, estimated bool) (*int6
 	}
 
 	if err != nil {
-		log.Fatalln("Error while count user collection:", err)
+		log.Errorln("Error while count user collection:", err)
 	}
 
 	return &count, nil
@@ -97,7 +98,7 @@ func (u UserRepositoryMongoDB) Create(ctx context.Context, user *m.User) error {
 	_, err := userCollection.InsertOne(ctx, *user)
 
 	if err != nil {
-		log.Fatalln("Error while create user:", err)
+		log.Errorln("Error while create user:", err)
 		return err
 	}
 

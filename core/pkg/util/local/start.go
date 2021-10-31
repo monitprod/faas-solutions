@@ -4,7 +4,8 @@ import (
 	"context"
 	"encoding/json"
 	"io/ioutil"
-	"log"
+
+	log "github.com/sirupsen/logrus"
 
 	c "github.com/monitprod/core/pkg/constant"
 )
@@ -41,7 +42,7 @@ func Start(
 	HandleRequest, err := b.Handler(ctx, *b.Payload)
 
 	if err != nil {
-		log.Fatalln("Handle request failure:\n", err)
+		log.Errorln("Handle request failure:\n", err)
 	}
 
 	log.Printf("%+v", HandleRequest)
@@ -52,7 +53,7 @@ func startPayloadFromFile(payloadFile string) *map[string]interface{} {
 	file, err := ioutil.ReadFile(payloadFile)
 
 	if err != nil {
-		log.Fatalln("Payload read file error:\n", err)
+		log.Errorln("Payload read file error:\n", err)
 	}
 
 	payload := make(map[string]interface{})
@@ -60,7 +61,7 @@ func startPayloadFromFile(payloadFile string) *map[string]interface{} {
 	err = json.Unmarshal([]byte(file), &payload)
 
 	if err != nil {
-		log.Fatalln("Failed to unmarshal payload:\n", err)
+		log.Errorln("Failed to unmarshal payload:\n", err)
 	}
 
 	return &payload

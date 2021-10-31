@@ -2,7 +2,8 @@ package handler
 
 import (
 	"context"
-	"log"
+
+	log "github.com/sirupsen/logrus"
 
 	m "github.com/monitprod/core/pkg/models"
 	r "github.com/monitprod/core/pkg/repository"
@@ -74,7 +75,7 @@ func mountBody(products *[]m.Product) (*string, error) {
 	body, err := bodyService.MountBody(products)
 
 	if err != nil {
-		log.Fatalln("Error on mount body from body service", err)
+		log.Errorln("Error on mount body from body service", err)
 		return nil, err
 	}
 
@@ -88,7 +89,7 @@ func getProducts(ctx context.Context, payload f.EventPayload) (*[]m.Product, err
 	products, err := productService.GetProducts(ctx)
 
 	if err != nil {
-		log.Fatalln("Error while get products from product service", err)
+		log.Errorln("Error while get products from product service", err)
 		return nil, err
 	}
 
@@ -106,13 +107,13 @@ func getUsersAndCount(ctx context.Context, payload f.EventPayload) (*UsersInfo, 
 
 	users, err := userService.GetUsers(ctx)
 	if err != nil {
-		log.Fatalln("Error while get users from user service", err)
+		log.Errorln("Error while get users from user service", err)
 		return nil, err
 	}
 
 	count, err := userService.CountUsers(ctx)
 	if err != nil {
-		log.Fatalln("Error while get count from user service", err)
+		log.Errorln("Error while get count from user service", err)
 		return nil, err
 	}
 

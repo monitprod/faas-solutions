@@ -3,8 +3,9 @@ package service
 import (
 	"fmt"
 	"io/ioutil"
-	"log"
 	"strings"
+
+	log "github.com/sirupsen/logrus"
 
 	"github.com/monitprod/core/pkg/models"
 
@@ -30,7 +31,7 @@ func (e *BodyServiceImp) MountBody(products *[]models.Product) (*string, error) 
 	templateContent, err := ioutil.ReadFile(templateFile)
 
 	if err != nil {
-		log.Fatalln("Error while read template file\n", err)
+		log.Errorln("Error while read template file\n", err)
 		return nil, err
 	}
 
@@ -40,7 +41,7 @@ func (e *BodyServiceImp) MountBody(products *[]models.Product) (*string, error) 
 	tableRows, err := mountRows(products)
 
 	if err != nil {
-		log.Fatalln("Error while mount rows\n", err)
+		log.Errorln("Error while mount rows\n", err)
 		return nil, err
 	}
 

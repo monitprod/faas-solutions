@@ -2,11 +2,11 @@ package core
 
 import (
 	"context"
-	"log"
 
 	"github.com/joho/godotenv"
 	"github.com/monitprod/core/pkg/loaders/database"
 	"github.com/monitprod/core/pkg/util"
+	log "github.com/sirupsen/logrus"
 )
 
 // UseCoreSmp is simple form of UseCore method
@@ -27,7 +27,7 @@ func UseCore(ctx context.Context, execution func() error) error {
 	defer close(ctx)
 
 	if err != nil {
-		log.Fatalln("Error at execution on UseCore\n", err)
+		log.Errorln("Error at execution on UseCore\n", err)
 
 		return err
 	}
@@ -36,6 +36,11 @@ func UseCore(ctx context.Context, execution func() error) error {
 }
 
 func start(ctx context.Context) {
+	log.SetFormatter(&log.TextFormatter{
+		ForceColors:   true,
+		FullTimestamp: true,
+	})
+
 	err := godotenv.Load(util.GetRootPath() + "/.env")
 
 	if err != nil {

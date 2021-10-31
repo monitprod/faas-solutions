@@ -3,10 +3,11 @@ package service
 import (
 	"bytes"
 	"fmt"
-	"log"
 	"net/smtp"
 	"os"
 	"text/template"
+
+	log "github.com/sirupsen/logrus"
 
 	m "github.com/monitprod/core/pkg/models"
 )
@@ -69,7 +70,7 @@ func (e *EmailServiceImp) send(recipient m.User, opts EmailOptions) error {
 	err := smtp.SendMail(smtpHost+":"+smtpPort, auth, from, to, body.Bytes())
 
 	if err != nil {
-		log.Fatalln("Error on send mail:\n", err)
+		log.Errorln("Error on send mail:\n", err)
 		return nil
 	}
 

@@ -3,8 +3,9 @@ package database
 import (
 	"context"
 	"errors"
-	"log"
 	"os"
+
+	log "github.com/sirupsen/logrus"
 
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
@@ -37,7 +38,7 @@ func ConnectClient(ctx context.Context) *mongo.Client {
 func GetClient() *mongo.Client {
 	isStarted, err := isClientStarted()
 	if err != nil {
-		log.Fatalln(err)
+		log.Errorln(err)
 		return nil
 	}
 

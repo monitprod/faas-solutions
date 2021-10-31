@@ -1,13 +1,16 @@
 package util
 
 import (
-	"log"
+	log "github.com/sirupsen/logrus"
 
 	"github.com/joho/godotenv"
 )
 
 func StartEnv() {
-	log.SetFlags(log.LstdFlags | log.Lmicroseconds)
+	log.SetFormatter(&log.TextFormatter{
+		ForceColors:   true,
+		FullTimestamp: true,
+	})
 	log.Println("Starting Env. . .")
 
 	envPath := GetRootPath() + "/.env"

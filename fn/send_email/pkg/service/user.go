@@ -2,7 +2,8 @@ package service
 
 import (
 	"context"
-	"log"
+
+	log "github.com/sirupsen/logrus"
 
 	m "github.com/monitprod/core/pkg/models"
 	r "github.com/monitprod/core/pkg/repository"
@@ -40,7 +41,7 @@ func (e *UserServiceImp) GetUsers(ctx context.Context) (*[]m.User, error) {
 	})
 
 	if err != nil {
-		log.Fatalln("Error while get users from repository:\n", err)
+		log.Errorln("Error while get users from repository:\n", err)
 		return nil, err
 	}
 
@@ -51,7 +52,7 @@ func (e *UserServiceImp) CountUsers(ctx context.Context) (*int64, error) {
 	count, err := e.UserRepository.Count(ctx, true)
 
 	if err != nil {
-		log.Fatalln("Error while count users from repository:\n", err)
+		log.Errorln("Error while count users from repository:\n", err)
 		return nil, err
 	}
 

@@ -2,7 +2,8 @@ package repository
 
 import (
 	"context"
-	"log"
+
+	log "github.com/sirupsen/logrus"
 
 	c "github.com/monitprod/core/pkg/constant"
 	"github.com/monitprod/core/pkg/loaders/database"
@@ -48,11 +49,11 @@ func (u ProductRepositoryMongoDB) GetProducts(ctx context.Context, opt GetProduc
 	)
 
 	if err != nil {
-		log.Fatalln("Error while find product collection:", err)
+		log.Errorln("Error while find product collection:", err)
 	}
 
 	if err = cursor.All(ctx, &products); err != nil {
-		log.Fatalln("Error while cursor all products of product collection:", err)
+		log.Errorln("Error while cursor all products of product collection:", err)
 	}
 
 	return &products, nil
@@ -77,7 +78,7 @@ func (p ProductRepositoryMongoDB) Count(ctx context.Context, estimated bool) (*i
 	}
 
 	if err != nil {
-		log.Fatalln("Error while count product collection:", err)
+		log.Errorln("Error while count product collection:", err)
 	}
 
 	return &count, nil
