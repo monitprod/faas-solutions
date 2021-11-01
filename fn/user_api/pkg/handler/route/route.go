@@ -2,7 +2,7 @@ package route
 
 import (
 	"context"
-	"errors"
+	"fmt"
 	"strings"
 
 	log "github.com/sirupsen/logrus"
@@ -23,13 +23,16 @@ func HandleAPIGatewayRoutes(ctx context.Context, request events.APIGatewayProxyR
 
 	routeHandler, ok := route.Routes[key]
 	if !ok {
-		return nil, errors.New("route not found")
+		return nil, fmt.Errorf("route not found, expected:\n%+v", key)
 	}
+	// TODO: Adding accept json header method options
 
+	// Route
 	r, err := routeHandler(ctx, request)
 
 	// Middle After Route
 	middle.ResponseError(&r, err)
+	middle.CORS(&r) // TODO: improve security of it
 
 	log.Printf("Response: %+v\n", *r)
 

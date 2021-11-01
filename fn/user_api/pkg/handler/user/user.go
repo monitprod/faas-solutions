@@ -7,12 +7,13 @@ import (
 	"github.com/aws/aws-lambda-go/events"
 	"github.com/monitprod/core/pkg/models"
 	r "github.com/monitprod/core/pkg/repository"
+	log "github.com/sirupsen/logrus"
 
 	s "github.com/monitprod/user_api/pkg/service"
 )
 
 func HandleUserRequest(ctx context.Context, request events.APIGatewayProxyRequest) (*events.APIGatewayProxyResponse, error) {
-
+	log.Infoln("Starting handle user")
 	user, err := models.UserFromJson(request.Body)
 	if err != nil {
 		return nil, err
@@ -23,8 +24,10 @@ func HandleUserRequest(ctx context.Context, request events.APIGatewayProxyReques
 		return nil, errors.New("error while sign user")
 	}
 
+	log.Infoln("User signed")
+
 	return &events.APIGatewayProxyResponse{
-		StatusCode: 200,
+		StatusCode: 201,
 	}, nil
 }
 
